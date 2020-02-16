@@ -39,7 +39,7 @@ import com.cos.blog.util.Script;
 public class UserController {
 	private static final String TAG = "UserController:";
 
-	@Value("${file.path")
+	@Value("${file.path}")
 	private String fileRealPath;
 
 	@Autowired
@@ -69,7 +69,6 @@ public class UserController {
 
 	@GetMapping("/user/profile/{id}")
 	public String profile(@PathVariable int id) {
-		// view resolver가 관여해야하기 떄문에 @responsebody ㄴ ㄴ
 		User principal = (User) session.getAttribute("principal");
 		System.out.println("UserController : profile.getProfile():  " + principal.getProfile());
 		if (principal.getId() == id) {
@@ -81,7 +80,7 @@ public class UserController {
 	}
 
 	@PutMapping("/user/profile")
-	public ResponseEntity<?> profile(@RequestParam int id, @RequestParam String password,@RequestParam MultipartFile profile) {
+	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password,@RequestParam MultipartFile profile) {
 
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid + "_" + profile.getOriginalFilename();
@@ -97,9 +96,9 @@ public class UserController {
 		int result = userService.수정완료(id, password, uuidFilename);
 
 		if (result == 1) {
-			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+			return Script.href("수정완료", "/");
 		} else {
-			return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.BAD_REQUEST);
+			return Script.back("수정 실패 ");
 		}
 
 	}

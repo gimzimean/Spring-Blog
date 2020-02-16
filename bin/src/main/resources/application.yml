@@ -24,6 +24,5 @@ spring:
     
     
 file:
-  path:  C:/src/springBlog학원/Spring-Blog/media/
- 
+  path: C:/src/springBlog학원/blog/blog/media/
     
