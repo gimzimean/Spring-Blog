@@ -4,12 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cos.blog.repository.PostRepository">
 
-	<select id="findAll" resultType="com.cos.blog.model.post.dto.ResponseListDto"><!-- list 타입이라고 안해도 됨 -->
-		   select p.id, p.title, p.content, p.userId, p.createDate, u.username 
-		from post p inner join user u 
-		on p.userId = u.id 
+	<select id="findAll"
+		resultType="com.cos.blog.model.post.dto.ResponseListDto"><!-- list 타입이라고 안해도 됨 -->
+		select p.id, p.title, p.content, p.userId, p.createDate, u.username
+		from post p inner join user u
+		on p.userId = u.id
 		order by p.id desc
 	</select>
 
+
+	<select id="findById" resultType="com.cos.blog.model.post.Post"><!-- list 타입이라고 안해도 됨 -->
+		select * from post where id =#{id}
+	</select>
 	
+	<update id="update">
+		update post set title = #{title}, content = #{content} where id = #{id}	
+	</update>
+	
+	
+
+
 </mapper>
