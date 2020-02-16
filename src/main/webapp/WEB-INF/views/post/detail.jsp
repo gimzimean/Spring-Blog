@@ -16,62 +16,59 @@
 		<div class="card-footer">
 
 			<c:if test="${post.userId eq sessionScope.principal.id}">
-				<a href="/post/update/${post.id}" class="btn btn-warning">수정</a>
+				<a href="/post/update/${post.id}" class="btn btn-warning">edit</a>
 				<button id="post--delete--submit" value="${post.id}"
-					class="btn btn-danger">삭제</button>
+					class="btn btn-danger">delete</button>
 			</c:if>
 
-			<a href="/" class="btn btn-primary">목록</a>
+			<a href="/" class="btn btn-primary">list</a>
 		</div>
 	</div>
 
 
-<br>
-<div class="card">
-	<div class="form-group">
-		<div class="card-body">
-			<textarea rows="2" class="form-control" id="content"></textarea>
-		</div>
+	<br>
+	<div class="card">
+		<div class="form-group">
+			<div class="card-body">
+				<input type="hidden" id="postId" value="${post.id }" /> <input
+					type="hidden" id="userId" value="${sessionScope.principal.id }" />
+				<textarea rows="2" class="form-control" id="content"></textarea>
+			</div>
 
-		<div class="card-footer">
-			<button id="comment--save--submit" class="btn btn-primary">register</button>
+			<div class="card-footer">
+				<button id="comment--save--submit" class="btn btn-primary">submit</button>
+			</div>
+		</div>
+	</div>
+
+
+	<br />
+
+	<div class="card">
+		<div class="form-group">
+			<div class="card-header">
+				<h4 class="card-title">Comments</h4>
+
+			</div>
+
+			<ul id="comment--items" class="list-group">
+				<c:forEach var="comment" items="${comments }">
+					<li id="comment--item--${comment.id }"
+						class="list-group-item d-flex justify-content-between align-items-center">
+						<div class="font-italic">${comment.content }</div>
+						<div class="badge badge-light badge-pill ml-auto">${comment.username }</div>
+						<c:if test="${comment.userId eq sessionScope.principal.id }">
+							<button onclick="commentDelete(${comment.id})"
+								class="badge badge-secondary badge-pill">delete</button>
+						</c:if>
+					</li>
+				</c:forEach>
+			</ul>
 		</div>
 	</div>
 </div>
 
-
-<br />
-
-<div class="card">
-	<div class="form-group">
-		<div class="card-header">
-			<h4 class="card-title">Comments</h4>
-
-		</div>
-		<div class="comment--items card-body">
-			<div class="comment--item">
-				<span class="comment--content">Contents </span> <span
-					id="comment--delete--submit" value="1"> </span>
-			</div>
-
-			<div class="comment--item">
-				<span class="comment--content">Contents </span> <span
-					id="comment--delete--submit" value="2">X </span>
-			</div>
-			<div class="comment--item">
-				<span class="comment--content">Contents </span> <span
-					id="comment--delete--submit" value="3"> X</span>
-			</div>
-		</div>
-
-	</div>
-</div>
-
-
-
-
-</div>
-
+<script src="/js/detail.js"></script>
 
 
 
