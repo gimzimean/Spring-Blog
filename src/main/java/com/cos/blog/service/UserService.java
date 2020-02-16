@@ -2,7 +2,10 @@ package com.cos.blog.service;
 
 import java.net.InterfaceAddress;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +20,8 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private HttpSession session;
 
 	@Transactional
 	public int 회원가입(ReqJoinDto dto) {
@@ -42,5 +47,21 @@ public class UserService {
 		return userRepository.findByUsernameAndPassword(dto);
 		
 	}
+	
+	public int  수정완료(int id, String password, String profile) {
+		int result=userRepository.update(id, password, profile);
+		 
+		if (result==1) {
+			User user =userRepository.findById(id);
+			session.setAttribute("principal", user);
+			
+			return 1;
+		}else {
+			return -1;
+		}
+		
+		
+	}
+	
 
 }
