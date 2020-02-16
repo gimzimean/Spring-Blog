@@ -12,6 +12,7 @@ import com.cos.blog.model.RespCM;
 import com.cos.blog.model.RespCode;
 import com.cos.blog.model.post.Post;
 import com.cos.blog.model.post.dto.RequestUpdateDto;
+import com.cos.blog.model.post.dto.RequestWriteDto;
 import com.cos.blog.model.post.dto.ResponseListDto;
 import com.cos.blog.model.user.User;
 import com.cos.blog.repository.PostRepository;
@@ -47,6 +48,7 @@ public class PostService {
 	public int 수정완료(RequestUpdateDto dto) {
 		User principal = (User) session.getAttribute("principal");
 		Post post = postRepository.findById(dto.getId());
+
 		if (principal.getId() == post.getUserId()) {
 			return postRepository.update(dto);
 		} else {
@@ -54,9 +56,19 @@ public class PostService {
 		}
 	}
 
-	public void 삭제하기(int id) {
-		postRepository.delete(id);
+	public int 삭제하기(int id) {
+		User principal = (User) session.getAttribute("principal");
+		Post post = postRepository.findById(id);
 
+		if (principal.getId() == post.getUserId()) {
+			return postRepository.delete(id);
+		} else {
+			return RespCode.권한없음;
+		}
+	}
+
+	public int 글쓰기(RequestWriteDto dto) {
+		return postRepository.save(dto);
 	}
 
 }

@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@include file="../include/nav.jsp"%>
 <div class="container">
 	<form>
 		<div class="form-group">
-			<label for="title">Title</label> <input type="text" class="form-control" placeholder="Enter title" id="title">
+			<label for="title">Title</label> <input type="text"
+				class="form-control" placeholder="Enter title" id="title">
 		</div>
 
 		<div class="form-group">
@@ -13,7 +15,40 @@
 		</div>
 
 	</form>
-	<button id="write--submit" class="btn btn-primary">save</button>
+	<button id="write--submit" class="btn btn-warning">save</button>
+
+</div>
 
 
-	<%@include file="../include/footer.jsp"%>
+<script>
+	$('#write--submit').on('click', function() {
+		var data = {
+			title : $('#title').val(),
+			content : $('#content').val()
+		}
+
+		$.ajax({
+			type : 'POST',
+			url : '/post/write',
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=utf-8",
+			dataType : 'json'
+		}).done(function(r) {
+			if (r.statusCode == 200) {
+				alert('포스팅 성공');
+				location.href = '/';
+			} else {
+				alert('포스팅 실패');
+			}
+		}).fail(function(r) {
+			alert('포스팅 실패');
+		});
+
+	});
+</script>
+
+
+
+
+
+<%@include file="../include/footer.jsp"%>

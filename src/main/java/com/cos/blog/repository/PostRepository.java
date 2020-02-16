@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cos.blog.model.post.Post;
 import com.cos.blog.model.post.dto.RequestUpdateDto;
+import com.cos.blog.model.post.dto.RequestWriteDto;
 import com.cos.blog.model.post.dto.ResponseListDto;
 
 //--MapperScan--에 의해서 메모리에 로드됨. DataAccessConfig.java 안에 respository 라고 설정되어있으니까 다 뒤짐. 
@@ -15,6 +16,7 @@ public interface PostRepository {
 	
 	int update(RequestUpdateDto dto);
 	int delete(int id);
+	int save(RequestWriteDto dto);
 	
 	
 	

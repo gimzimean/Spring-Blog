@@ -16,12 +16,21 @@
 	<select id="findById" resultType="com.cos.blog.model.post.Post"><!-- list 타입이라고 안해도 됨 -->
 		select * from post where id =#{id}
 	</select>
-	
+
 	<update id="update">
-		update post set title = #{title}, content = #{content} where id = #{id}	
+		update post set title = #{title}, content =#{content} where id = #{id}
 	</update>
-	
-	
+
+	<delete id="delete">
+		delete from post where id=#{id}
+	</delete>
+
+	<insert id="save">
+		insert into post(title, content, userId, createDate)
+		values(#{title}, #{content}, #{userId}, now())
+	</insert>
+
+
 
 
 </mapper>
